@@ -1,50 +1,48 @@
 import React, { useState } from 'react'
 import './MoodSongs.css'
 
-const MoodSongs = () => {
+const MoodSongs = ({ Songs }) => {
 
-   const [Songs,setSongs] = useState([
-     {
-        title:"test_title",
-        artist:"test_artist",
-        url:"test_url",
-     },
+    const [ isPlaying, setIsPlaying ] = useState(null);
 
-     {
-        title:"test_title",
-        artist:"test_artist",
-        url:"test_url",
-     },
+    const handlePlayPause = (index) => {
+        if (isPlaying === index) {
+            setIsPlaying(null);
+        } else {
+            setIsPlaying(index);
+        }
+    };
 
-     {
-        title:"test_title",
-        artist:"test_artist",
-        url:"test_url",
-     }
+   return (
+        <div className='mood-songs'>
+            <h2>Recommended Songs</h2>
 
-   ])
-
-
-
-  return (
-    <div className='mood-songs'>
-        <h2>Recommended Songs</h2>
-        <ul>
-            {Songs.map((song, index)=>(
+            {Songs.map((song, index) => (
                 <div className='song' key={index}>
                     <div className="title">
                         <h3>{song.title}</h3>
                         <p>{song.artist}</p>
                     </div>
                     <div className="play-pause-button">
-                        <i class="ri-pause-circle-fill"></i>
-                        <i className="ri-play-circle-fill"></i>
+                        {
+                            isPlaying === index &&
+                            <audio
+                                src={song.audio} style={{
+                                    display: 'none'
+                                }}
+                                autoPlay={isPlaying === index}
+                            ></audio>
+                        }
+                        <button className='btn' onClick={() => handlePlayPause(index)}>
+                            {isPlaying === index ? <i class="ri-pause-circle-fill"></i>:<i className="ri-play-circle-fill"></i>}
+                        </button>
                     </div>
+
                 </div>
             ))}
-        </ul>
-    </div>
-  )
+
+        </div>
+    )
 }
 
 export default MoodSongs

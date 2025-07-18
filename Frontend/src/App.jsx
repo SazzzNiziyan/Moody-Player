@@ -5,11 +5,14 @@ import MoodSongs from './components/MoodSongs'
 
 function App() {
 
+  const [ Song, setSongs ] = useState([
+       
+    ])
 
   return (
     <>
-      <FacialExpression />
-      <MoodSongs />
+      <FacialExpression setSongs={setSongs} />
+      <MoodSongs Songs={Song} />
     </>
   )
 }
